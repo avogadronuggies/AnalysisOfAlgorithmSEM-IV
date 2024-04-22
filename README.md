@@ -1,2 +1,2 @@
 ﻿# AnalysisOfAlgorithmSEM-IV
-# SEM-IV AOA all experiments provided in python
+SEM-IV AOA all experiments provided in python
