@@ -20,11 +20,13 @@ def dijkstra(adj, n, start):
                     dist[v] = dist[u] + adj[u][v]
                     paths[v+1] = paths[u+1] + [u+1]
     return dist, paths
+
 def print_paths(start, dist, paths):
     print("Shortest paths from vertex", start, "to other vertices:")
     print("V\tD\t\tPath")
     for v, path in paths.items():
         print(f" {v}\t {dist[v-1]}\t\t{path + [v]}")
+        
 def main():
     n = int(input("Enter the number of vertices: "))
     adj = []
