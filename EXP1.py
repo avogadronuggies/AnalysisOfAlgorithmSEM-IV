@@ -1,5 +1,6 @@
 import random
 import time
+
 def insertionsort(arr1,n):
   t1=time.time()
   for j in range(1,n):
@@ -12,6 +13,7 @@ def insertionsort(arr1,n):
     print(arr1)
   t2=time.time()
   print("Time taken for INSERTION SORT:",  (t2 - t1), "seconds")
+
 def selectionSort(arr2,n):
   t1=time.time()
   for j in range(n):
@@ -25,10 +27,13 @@ def selectionSort(arr2,n):
     print(arr2)
   t2=time.time()
   print("Time taken for INSERTION SORT:",  (t2 - t1), "seconds")
+
 n = int(input("Enter Number of Elements:"))
 arr=[]
+
 for i in range(n):
   arr.append(random.randint(0,100))
+
 print("Original List:")
 print(arr)
 arr1=arr[:]
