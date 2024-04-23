@@ -1,63 +1,42 @@
-import heapq
 import time
 
-def greedy(graph, start):
-    vertices = len(graph)
-    distance = [float('inf')] * vertices
-    distance[start] = 0
-    visited = [False] * vertices
-    priority_queue = [(0, start)]
-    path = [-1] * vertices
-
-    while priority_queue:
-        dist_u, u = heapq.heappop(priority_queue)
-
-        if visited[u]:
-            continue
-
-        visited[u] = True
-
-        for v, weight in enumerate(graph[u]):
-            if not visited[v] and weight != 0 and distance[u] + weight < distance[v]:
-                distance[v] = distance[u] + weight
-                path[v] = u  # Update the parent vertex for reconstructing the path
-                heapq.heappush(priority_queue, (distance[v], v))
-
-    return distance, path
-
-def print_path(source, target, path, distances):
-    path_trace = []
-    while target != -1:
-        path_trace.append(target)
-        target = path[target]
-
-    path_trace.reverse()
-
-    path_str = " -> ".join(str(vertex) for vertex in path_trace)
-    return f"{source} -> {path_str}"
-
+def dijkstra(adj, n, start):
+    INF = float('inf')
+    dist = [INF] * n
+    dist[start-1] = 0
+    visited = set()
+    paths = {v+1: [] for v in range(n)}
+    for _ in range(n):
+        min_dist = INF
+        u = -1
+        for v in range(n):
+            if v+1 not in visited and dist[v] < min_dist:
+                min_dist = dist[v]
+                u = v
+        visited.add(u+1)
+        for v in range(n):
+            if v+1 not in visited and adj[u][v] > 0:
+                if dist[u] + adj[u][v] < dist[v]:
+                    dist[v] = dist[u] + adj[u][v]
+                    paths[v+1] = paths[u+1] + [u+1]
+    return dist, paths
+def print_paths(start, dist, paths):
+    print("Shortest paths from vertex", start, "to other vertices:")
+    print("V\tD\t\tPath")
+    for v, path in paths.items():
+        print(f" {v}\t {dist[v-1]}\t\t{path + [v]}")
+def main():
+    n = int(input("Enter the number of vertices: "))
+    adj = []
+    print("Enter the adjacency matrix (enter 0 for no connection):")
+    for _ in range(n):
+        row = list(map(int, input().split()))
+        adj.append(row)
+    start = int(input("Enter the start vertex:"))
+    t1=time.time()
+    result_dist, result_paths = dijkstra(adj, n, start)
+    print_paths(start, result_dist, result_paths)
+    t2=time.time()
+    print("Time Taken:",(t2-t1)," seconds")
 if __name__ == "__main__":
-    vertices = int(input("Enter the number of vertices: "))
-
-    print("Enter the weighted adjacency matrix (row-wise, separate values with spaces):")
-    graph = [list(map(int, input().split())) for _ in range(vertices)]
-
-    start_vertex = int(input("Enter the starting vertex: "))
-
-    start_time = time.time()
-    time.sleep(1)  # Introduce a delay using time.sleep(1) for demonstration purposes
-
-    result, path = greedy(graph, start_vertex)
-
-    output_vertices = ' '.join(map(str, range(vertices)))
-    output_distances = ' '.join(map(str, result))
-    output_paths = '\n'.join(print_path(start_vertex, i, path, result) for i in range(vertices))
-
-    print(f'Vertices: {output_vertices}')
-    print(f'Distances: {output_distances}')
-    print(f'Path:')
-    print(output_paths)
-
-    end_time = time.time()
-
-    print(f"\nTotal execution time: {end_time - start_time:.6f} seconds")
+    main()
