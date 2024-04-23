@@ -10,7 +10,7 @@ def greedy(graph, start):
     path = [-1] * vertices
 
     while priority_queue:
-        dist_u, u = heapq.heappop(priority_queue)
+        u = heapq.heappop(priority_queue)
 
         if visited[u]:
             continue
