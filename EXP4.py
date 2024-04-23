@@ -72,7 +72,7 @@ def kruskals(adj_matrix):
 
 # Example usage:
 n = int(input("Enter the number of vertices in the graph: "))
-print("Enter the adjacency matrix row by row (space-separated):")
+print("Enter the Weighted Matrix row by row (space-separated):")
 adj_matrix = []
 for _ in range(n):
     row = list(map(int, input().split()))
