@@ -26,6 +26,7 @@ def mergeSort(arr):
       arr[k] = R[j]
       j += 1
       k += 1
+  print(arr)
   return arr
 
 
@@ -45,6 +46,7 @@ def partition(arr, low, high):
       break
 
   arr[low], arr[j] = arr[j], arr[low]
+  print(arr)
   return j
 
 
